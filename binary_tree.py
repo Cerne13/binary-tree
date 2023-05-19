@@ -73,7 +73,7 @@ class BinaryTree:
                 current_node = current_node.left
 
     @staticmethod
-    def find_rightmost(self, node: Node) -> Node:
+    def find_rightmost(node: Node) -> Node:
         current_node = node
         while current_node.right:
             current_node = current_node.right
@@ -87,18 +87,16 @@ class BinaryTree:
             rightmost = self.find_rightmost(to_delete.left)
             rightmost_parent = self.find_parent(rightmost.value)
 
-            if to_delete == to_delete_parent.left:
-                rightmost.right = to_delete.right
-                to_delete_parent.left = rightmost
-
-            if to_delete == to_delete_parent.right:
+            if rightmost_parent != to_delete:
                 rightmost_parent.right = rightmost.left
                 rightmost.left = to_delete.left
-                rightmost.right = to_delete.right
-                to_delete_parent.right = rightmost
+            rightmost.right = to_delete.right
 
+            if to_delete == to_delete_parent.left:
+                to_delete_parent.left = rightmost
+            if to_delete == to_delete_parent.right:
+                to_delete_parent.right = rightmost
             else:
-                rightmost.right = to_delete.right
                 self.head = rightmost
 
         elif to_delete.left or to_delete.right:
